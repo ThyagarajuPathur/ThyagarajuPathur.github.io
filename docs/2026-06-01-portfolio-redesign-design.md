@@ -46,7 +46,7 @@ generous whitespace.
 |---|---------|-----------|------|-------|
 | 01 | Preporium | Focused LeetCode companion — curated DSA path, daily pace with a live finish date, progress tracking. | Next.js · TypeScript · Supabase · Tailwind | live (preporax.vercel.app), code |
 | 02 | Rev EV | iOS app that synthesizes a combustion engine sound for EVs from live OBD-II / Bluetooth RPM data. | Swift · SwiftUI · Combine · CoreAudio | code |
-| 03 | Pvraos Nutritional Mix | Print-ready product-label generator for a nutritional-mix brand — batch a clean label grid in one click. | React · TypeScript · Vite | code |
+| 03 | Pvraos Nutritional Mix | Full e-commerce store for a nutritional-health-mix brand — catalog, cart, Razorpay checkout, order tracking, reviews, coupons, accounts. | Next.js · TypeScript · Supabase · Razorpay · Shiprocket | live (nutritional-health-mix.vercel.app), code |
 
 ## Tech & hosting
 
