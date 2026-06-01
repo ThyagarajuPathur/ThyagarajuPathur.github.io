@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <rect width="32" height="32" fill="#000000"/>
+  <!-- prompt chevron > -->
+  <path d="M7 10 L13 16 L7 22" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="square" stroke-linejoin="miter"/>
+  <!-- underscore cursor _ -->
+  <rect x="16" y="21" width="9" height="2.6" fill="#ffffff"/>
+</svg>

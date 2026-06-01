@@ -1,0 +1,401 @@
+/* ============================================================
+   Thyagaraju Pathur — Portfolio
+   Aesthetic: Terminal × Swiss. Strict monochrome. IBM Plex Mono.
+   ============================================================ */
+
+:root {
+  --bg:        #000000;
+  --fg:        #ffffff;
+  --dim:       #8a8a8a;   /* secondary text            */
+  --faint:     #565656;   /* tertiary / placeholders   */
+  --rule:      #262626;   /* hairline rules            */
+  --rule-mid:  #3a3a3a;
+  --maxw:      1080px;
+  --pad:       clamp(20px, 5vw, 64px);
+  --ease:      cubic-bezier(.22, 1, .36, 1);
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+a { color: inherit; text-decoration: none; }
+
+::selection { background: var(--fg); color: var(--bg); }
+
+/* ---- CRT / scanline atmosphere (static, very faint) ---- */
+.crt {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      rgba(255,255,255,.025) 0px,
+      rgba(255,255,255,.025) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+  mix-blend-mode: screen;
+  opacity: .6;
+}
+.crt::after {
+  /* gentle vignette */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(120% 120% at 50% 40%, transparent 60%, rgba(0,0,0,.55) 100%);
+}
+
+/* ============================================================
+   Top bar
+   ============================================================ */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px var(--pad);
+  background: rgba(0,0,0,.82);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--rule);
+  font-size: .8rem;
+  letter-spacing: .02em;
+}
+.topbar .path { color: var(--dim); white-space: nowrap; }
+.topbar .path:hover { color: var(--fg); }
+
+.nav { display: flex; gap: clamp(12px, 2.4vw, 30px); }
+.nav a {
+  color: var(--dim);
+  position: relative;
+  padding: 2px 0;
+  transition: color .2s var(--ease);
+}
+.nav a::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: -2px;
+  width: 100%; height: 1px;
+  background: var(--fg);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .25s var(--ease);
+}
+.nav a:hover, .nav a:focus-visible { color: var(--fg); }
+.nav a:hover::after, .nav a:focus-visible::after { transform: scaleX(1); }
+
+.clock {
+  color: var(--faint);
+  font-size: .78rem;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* ============================================================
+   Layout container
+   ============================================================ */
+main { display: block; }
+
+.hero,
+.section-head,
+.grid,
+.contact-body { max-width: var(--maxw); margin-inline: auto; }
+
+/* ============================================================
+   Hero
+   ============================================================ */
+.hero { padding: clamp(64px, 13vh, 150px) var(--pad) clamp(56px, 11vh, 120px); }
+
+.prompt {
+  color: var(--dim);
+  font-size: .9rem;
+  letter-spacing: .04em;
+  margin: 0 0 18px;
+}
+
+.name {
+  font-weight: 600;
+  font-size: clamp(2.6rem, 8vw, 5.6rem);
+  line-height: .98;
+  letter-spacing: -.03em;
+  margin: 0 0 28px;
+  overflow-wrap: break-word;
+}
+
+.cursor {
+  display: inline-block;
+  width: .58ch;
+  height: .92em;
+  margin-left: .12em;
+  background: var(--fg);
+  vertical-align: -.06em;
+  animation: blink 1.05s steps(1) infinite;
+}
+.cursor.sm { height: .8em; width: .5ch; }
+
+@keyframes blink { 50% { opacity: 0; } }
+
+.intro {
+  max-width: 60ch;
+  font-size: clamp(.95rem, 1.5vw, 1.12rem);
+  font-weight: 300;
+  line-height: 1.78;
+  color: #d6d6d6;
+  margin: 0 0 34px;
+}
+.intro em { font-style: normal; color: var(--fg); border-bottom: 1px solid var(--fg); }
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  font-size: .82rem;
+  color: var(--dim);
+  margin: 0;
+}
+.meta .sep { color: var(--faint); }
+.meta .status { color: var(--fg); }
+.meta .status::before {
+  content: "";
+  display: inline-block;
+  width: 7px; height: 7px;
+  margin-right: 7px;
+  border-radius: 50%;
+  background: var(--fg);
+  vertical-align: middle;
+  animation: pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .35; } }
+
+/* ============================================================
+   Section heads (full-bleed hairlines)
+   ============================================================ */
+.section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px var(--pad);
+  font-size: .72rem;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--dim);
+  border-top: 1px solid var(--fg);
+  border-bottom: 1px solid var(--fg);
+}
+
+/* ============================================================
+   Work grid
+   ============================================================ */
+.grid {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+.cell {
+  position: relative;
+  padding: clamp(26px, 3.6vw, 44px) var(--pad);
+  border-bottom: 1px solid var(--rule);
+  transition: background .28s var(--ease), color .28s var(--ease);
+}
+.cell:nth-child(odd)  { border-right: 1px solid var(--rule); }
+
+/* invert on hover — strong B&W Swiss move */
+.cell:not(.more):hover { background: var(--fg); color: var(--bg); }
+.cell:not(.more):hover .idx,
+.cell:not(.more):hover .tags { color: #444; }
+.cell:not(.more):hover .links a { border-color: var(--bg); }
+.cell:not(.more):hover .links a:hover { background: var(--bg); color: var(--fg); }
+
+.idx {
+  display: block;
+  font-size: .76rem;
+  color: var(--faint);
+  margin-bottom: 14px;
+  transition: color .28s var(--ease);
+}
+.proj-name {
+  font-size: clamp(1.3rem, 2.6vw, 1.9rem);
+  font-weight: 500;
+  letter-spacing: -.02em;
+  margin: 0 0 14px;
+}
+.proj-desc {
+  font-size: .9rem;
+  font-weight: 300;
+  line-height: 1.7;
+  margin: 0 0 22px;
+  max-width: 46ch;
+}
+.tags {
+  font-size: .72rem;
+  letter-spacing: .03em;
+  color: var(--dim);
+  margin: 0 0 22px;
+  transition: color .28s var(--ease);
+}
+.links { display: flex; gap: 12px; margin: 0; }
+.links a {
+  font-size: .78rem;
+  padding: 6px 14px;
+  border: 1px solid currentColor;
+  transition: background .2s var(--ease), color .2s var(--ease);
+}
+.cell:not(.more) .links a:hover { background: var(--fg); color: var(--bg); }
+
+/* "more soon" cell */
+.cell.more {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 8px;
+  color: var(--faint);
+  min-height: 140px;
+}
+.cell.more .more-text { font-size: .95rem; color: var(--dim); }
+.cell.more .more-sub {
+  font-size: .7rem;
+  letter-spacing: .25em;
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   Contact
+   ============================================================ */
+.contact { padding-bottom: 10px; }
+.contact-body {
+  padding: clamp(44px, 8vh, 90px) var(--pad);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 22px 40px;
+}
+.contact-lead {
+  width: 100%;
+  font-size: clamp(1.2rem, 3vw, 2rem);
+  font-weight: 400;
+  color: #d6d6d6;
+  margin: 0 0 10px;
+  letter-spacing: -.01em;
+}
+.contact-links {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 26px;
+  padding: 0; margin: 0;
+}
+.contact-links a {
+  font-size: 1rem;
+  color: var(--dim);
+  position: relative;
+}
+.contact-links a::after {
+  content: "↗";
+  font-size: .72em;
+  margin-left: 4px;
+  color: var(--faint);
+}
+.contact-links a:hover { color: var(--fg); }
+.contact-links a:hover::after { color: var(--fg); }
+
+.resume-btn {
+  margin-left: auto;
+  font-size: .92rem;
+  padding: 12px 24px;
+  background: var(--fg);
+  color: var(--bg);
+  border: 1px solid var(--fg);
+  transition: background .2s var(--ease), color .2s var(--ease);
+}
+.resume-btn:hover { background: var(--bg); color: var(--fg); }
+
+/* ============================================================
+   Footer
+   ============================================================ */
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 24px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 22px var(--pad);
+  border-top: 1px solid var(--rule);
+  font-size: .74rem;
+  color: var(--faint);
+}
+
+/* ============================================================
+   Focus visibility (a11y)
+   ============================================================ */
+a:focus-visible {
+  outline: 2px solid var(--fg);
+  outline-offset: 3px;
+}
+
+/* ============================================================
+   Boot-sequence reveal + scroll reveal
+   ============================================================ */
+.boot {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: bootIn .6s var(--ease) forwards;
+  animation-delay: calc(var(--i) * .16s + .15s);
+}
+@keyframes bootIn { to { opacity: 1; transform: none; } }
+
+/* Only hide reveal items when JS is available to bring them back */
+.js .reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity .6s var(--ease), transform .6s var(--ease);
+}
+.js .reveal.in { opacity: 1; transform: none; }
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+@media (max-width: 720px) {
+  .topbar { flex-wrap: wrap; gap: 8px 16px; }
+  .clock { display: none; }
+  .grid { grid-template-columns: 1fr; }
+  .cell:nth-child(odd) { border-right: none; }
+  .resume-btn { margin-left: 0; }
+}
+
+/* ============================================================
+   Reduced motion
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .boot, .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+  .cursor, .meta .status::before { animation: none; }
+  .crt { display: none; }
+}
